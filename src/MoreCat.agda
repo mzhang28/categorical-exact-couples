@@ -66,10 +66,13 @@ module _ {Cat : AbelianCategory ℓO ℓM} where
   module _ {X Y : ob} (f : Hom[ X , Y ]) where
     open Image
 
+    f⋆coker≡0 : f ⋆ coker f ≡ 0h
+    f⋆coker≡0 = hasCokernels f .Cokernel.f⋆coker
+
     hasImages : Image f
     hasImages .Im = _
     hasImages .m = ker (coker f)
     hasImages .mMono {a = x} {y} p = kernelMono (coker f) p
-    hasImages .e = {!  !}
-    hasImages .eProp = {!   !}
-    hasImages .univ = {!   !}
+    hasImages .e = hasKernels (coker f) .Kernel.univ X f f⋆coker≡0 .fst .fst
+    hasImages .eProp = sym (hasKernels (coker f) .Kernel.univ X f f⋆coker≡0 .fst .snd)
+    hasImages .univ Im' e' m' m'Mono f≡e'm' = ({!   !} , {!   !}) , {!   !}
